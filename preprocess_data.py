@@ -1,6 +1,5 @@
 """
 Data Pre-processing and Validation for Sentence Memorability Experiment
-
 This script processes participant log files to:
 1. Apply validation filter
 2. Track exclusions
