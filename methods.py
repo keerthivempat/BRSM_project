@@ -1,27 +1,18 @@
 """
-STEP 2 — COMBINED HYPOTHESIS TESTING & DESCRIPTIVES
-=====================================================
-Uses BOTH datasets:
-
-  teammate_data  = processed_memorability_data.csv  (her preprocessing)
-  our_data       = memorability_scores.csv          (our preprocessing)
-
-What her data adds that ours did not:
-  1. True 3-block structure (she uses target-count to split blocks;
-     we used 'Rest Phase started' markers which only found 2)
+MEM_FILE1:
+  1. True 3-block structure (target-count to split blocks;)
   2. Raw hit and false alarm COUNTS stored per block
   3. Explicit per-block balance verification (4 of each condition per block)
   4. Shapiro-Wilk normality check on scores → confirms non-parametric tests
   5. Block-order / practice-effect analysis (score trend across blocks 1→2→3)
 
-What her data CANNOT do that ours can:
+MEM_FILE2:
   - Per-condition×voice corrected memorability scores (needed for H1, H1a, H1b, H2)
   - RT analysis (needed for H2)
   - WR accuracy comparison (needed for H3)
 
-Strategy:
-  - Use HER data for: normality justification, block-effect analysis, exclusion reporting
-  - Use OUR data for: all hypothesis tests requiring condition/voice breakdown
+  - MEM_FILE1 data for: normality justification, block-effect analysis, exclusion reporting
+  - MEM_FILE2 data for: all hypothesis tests requiring condition/voice breakdown
 """
 
 import os
@@ -288,3 +279,4 @@ print(f"  -> {OUTPUT_FOLDER}/hypothesis_results.csv")
 print(f"  -> {OUTPUT_FOLDER}/results_report.txt")
 
 print("="*55)
+
