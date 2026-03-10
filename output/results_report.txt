@@ -1,0 +1,102 @@
+-------------------------------------------------------
+EXCLUSION SUMMARY (from teammate preprocessing)
+-------------------------------------------------------
+  Log files processed          : 114
+  Total possible blocks        : 342
+  Valid blocks retained        : 339 (99.1%)
+  Blocks excluded              : 3 (0.9%)
+  Complete participants (3 blk): 112
+  Partial participants (<3 blk): 2
+  Final N for analysis         : 114
+-------------------------------------------------------
+NORMALITY CHECK — Shapiro-Wilk (from teammate data)
+-------------------------------------------------------
+  Shapiro-Wilk: W = 0.9530, p < .001
+  Distribution: NON-NORMAL
+  Conclusion: Non-parametric tests (Kruskal-Wallis) are justified
+-------------------------------------------------------
+TASK 5 — DESCRIPTIVE STATISTICS (per condition x voice)
+-------------------------------------------------------
+
+condition_voice   N  Mean_MemScore  SD_MemScore  Mean_HitRate  Mean_RT  SD_RT
+      HH_Active 112         0.6544       0.2287        0.8214   1667.6  602.9
+     HH_Passive 112         0.6768       0.2352        0.8438   1795.2  676.9
+      HL_Active 112         0.6544       0.2335        0.8214   1657.6  619.3
+     HL_Passive 112         0.6790       0.2355        0.8460   1754.3  629.4
+      LH_Active 112         0.6678       0.2056        0.8348   1653.3  614.8
+     LH_Passive 112         0.6790       0.2155        0.8460   1672.6  590.6
+      LL_Active 112         0.6142       0.2536        0.7812   1692.1  584.5
+     LL_Passive 112         0.6209       0.2582        0.7879   1827.8  643.0
+
+  Block-level corrected scores (from teammate data, raw Hits-FA counts):
+    Block 1: M=-4.92, SD=8.83, Median=-4.0, N=114
+    Block 2: M=1.72, SD=10.47, Median=5.0, N=113
+    Block 3: M=4.70, SD=9.17, Median=6.5, N=112
+-------------------------------------------------------
+BLOCK PRACTICE EFFECT — Kruskal-Wallis across Blocks 1/2/3
+-------------------------------------------------------
+
+  H(2) = 64.855, p < .001
+  Block 1 M=-4.92  Block 2 M=1.72  Block 3 M=4.70
+  Interpretation: Significant practice/order effect across blocks
+
+  Pairwise Mann-Whitney post-hoc (Bonferroni a=0.05/3=0.0167):
+    Block 1 vs 2: U=3640.5, p < .001 [significant]
+    Block 1 vs 3: U=2596.0, p < .001 [significant]
+    Block 2 vs 3: U=5186.0, p = 0.019 [not significant]
+-------------------------------------------------------
+TASK 6a — H1: Active vs Passive Memorability (independent t-test)
+-------------------------------------------------------
+
+  Active  : M=0.6477, SD=0.1752, N=112
+  Passive : M=0.6639, SD=0.1856, N=112
+  t(222) = -0.671, p = 0.503, d = -0.090
+-------------------------------------------------------
+TASK 6b — H2: Active vs Passive RT (independent t-test)
+-------------------------------------------------------
+
+  Active  : M=1686.1ms, SD=317.5, N=112
+  Passive : M=1770.6ms, SD=359.2, N=112
+  t(222) = -1.864, p = 0.064, d = -0.249
+-------------------------------------------------------
+TASK 7 — H1b: HL-Active vs LH-Active (paired t-test)
+-------------------------------------------------------
+
+  HL-Active : M=0.6544, SD=0.2335
+  LH-Active : M=0.6678, SD=0.2056
+  N (paired)= 112
+  t(111) = -0.617, p = 0.538, d = -0.058
+-------------------------------------------------------
+KRUSKAL-WALLIS — H1a: HH vs HL vs LH vs LL
+-------------------------------------------------------
+
+  H(3) = 6.871, p = 0.076
+    HH: M=0.6656, SD=0.1982, N=112
+    HL: M=0.6667, SD=0.2037, N=112
+    LH: M=0.6734, SD=0.1793, N=112
+    LL: M=0.6176, SD=0.2144, N=112
+-------------------------------------------------------
+H3 — WR Accuracy: Active-repeat vs Passive-repeat (paired t-test)
+-------------------------------------------------------
+
+  Active-repeat  WR: M=0.7645, SD=0.1320
+  Passive-repeat WR: M=0.7344, SD=0.1436
+  N (paired) = 112
+  t(111) = 2.089, p = 0.039, d = 0.197
+-------------------------------------------------------
+TASK 8 — BONFERRONI CORRECTION
+-------------------------------------------------------
+
+  t-tests run      : 4
+  Bonferroni alpha : 0.05 / 4 = 0.0125
+
+  Test                                          p-value    Result
+  --------------------------------------------- --------- --------------------
+  H1 - Memorability Active vs Passive           0.5029     not significant
+  H2 - RT Active vs Passive                     0.0637     not significant
+  H1b - HL-Active vs LH-Active                  0.5384     not significant
+  H3 - WR accuracy Active vs Passive            0.039      not significant
+
+  [Non-parametric, no Bonferroni applied]
+  KW blocks H1a    p = 0.076  not significant
+  KW practice-eff  p < .001  significant at p<.05 -- IMPORTANT NOTE

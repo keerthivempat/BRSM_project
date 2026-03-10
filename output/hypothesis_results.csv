@@ -1,0 +1,7 @@
+test,hypothesis,M1,M2,statistic,df,p_value,cohens_d,bonferroni_alpha,significant_corrected
+H1 - Memorability Active vs Passive,H1,0.6477,0.6639,-0.671,222,0.5029,-0.0897,0.0125,False
+H2 - RT Active vs Passive,H2,1686.12,1770.55,-1.8637,222,0.0637,-0.249,0.0125,False
+H1b - HL-Active vs LH-Active,H1b,0.6544,0.6678,-0.6171,111,0.5384,-0.0583,0.0125,False
+H3 - WR accuracy Active vs Passive,H3,0.7645,0.7344,2.0888,111,0.039,0.1974,0.0125,False
+KW H1a - HH/HL/LH/LL,H1a,see desc,see desc,6.8705,3,0.0761,N/A,N/A,False
+KW Block effect,Practice,see desc,see desc,64.855,2,0.0,N/A,N/A,True
