@@ -29,15 +29,12 @@ import pandas as pd
 import numpy as np
 from scipy import stats
 
-TEAMMATE_FILE = "./processed_memorability_data.csv"
-OUR_MEM_FILE  = "./output/memorability_scores.csv"
-OUR_TRIAL_FILE= "./output/clean_trials.csv"
+MEM_FILE1 = "./processed_memorability_data.csv"
+MEM_FILE2  = "./output/memorability_scores.csv"
+TRIAL_FILE= "./output/clean_trials.csv"
 OUTPUT_FOLDER = "./output"
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-# ─────────────────────────────────────────────
-# HELPERS
-# ─────────────────────────────────────────────
 def cohens_d_ind(a, b):
     pooled = np.sqrt((np.std(a,ddof=1)**2 + np.std(b,ddof=1)**2) / 2)
     return (np.mean(a) - np.mean(b)) / pooled if pooled > 0 else np.nan
@@ -50,20 +47,17 @@ def fmt_p(p):
     if p < 0.001: return "< .001"
     return f"= {p:.3f}"
 
-# ─────────────────────────────────────────────
-# LOAD DATA
-# ─────────────────────────────────────────────
-tm   = pd.read_csv(TEAMMATE_FILE)       # her block-level data
-mem  = pd.read_csv(OUR_MEM_FILE)        # our condition×voice scores
-tri  = pd.read_csv(OUR_TRIAL_FILE)      # our trial-level data
+tm   = pd.read_csv(MEM_FILE1)       
+mem  = pd.read_csv(MEM_FILE2)        
+tri  = pd.read_csv(TRIAL_FILE)      
 
-print(f"Teammate data  : {len(tm)} blocks, {tm['participant_id'].nunique()} participants")
-print(f"Our mem data   : {len(mem)} rows, {mem['participant_ID'].nunique()} participants")
-print(f"Our trial data : {len(tri)} trials")
+print(f"Mem 1 data  : {len(tm)} blocks, {tm['participant_id'].nunique()} participants")
+print(f"Mem 2 data   : {len(mem)} rows, {mem['participant_ID'].nunique()} participants")
+print(f"Trial data : {len(tri)} trials")
 print()
 
-results   = []   # t-test results for Bonferroni
-report    = []   # human-readable lines
+results   = []   # t-test results
+report    = []  
 
 def sec(title):
     line = "-" * 55
@@ -74,10 +68,7 @@ def out(line=""):
     print(line)
     report.append(line)
 
-# ═════════════════════════════════════════════
-# SECTION 0 — EXCLUSION SUMMARY (from her data)
-# ═════════════════════════════════════════════
-sec("EXCLUSION SUMMARY (from teammate preprocessing)")
+sec("EXCLUSION SUMMARY")
 
 n_files     = 114
 total_blocks= n_files * 3
@@ -94,19 +85,13 @@ out(f"  Complete participants (3 blk): {n_complete}")
 out(f"  Partial participants (<3 blk): {n_partial}")
 out(f"  Final N for analysis         : {tm['participant_id'].nunique()}")
 
-# ═════════════════════════════════════════════
-# SECTION 1 — NORMALITY CHECK (from her data — justifies non-parametric)
-# ═════════════════════════════════════════════
-sec("NORMALITY CHECK — Shapiro-Wilk (from teammate data)")
+sec("NORMALITY CHECK — Shapiro-Wilk")
 
 sw_stat, sw_p = stats.shapiro(tm['corrected_memorability_score'].dropna())
 out(f"  Shapiro-Wilk: W = {sw_stat:.4f}, p {fmt_p(sw_p)}")
 out(f"  Distribution: {'NON-NORMAL' if sw_p < 0.05 else 'normal'}")
 out(f"  Conclusion: {'Non-parametric tests (Kruskal-Wallis) are justified' if sw_p < 0.05 else 'Parametric tests appropriate'}")
 
-# ═════════════════════════════════════════════
-# SECTION 2 — DESCRIPTIVE STATISTICS (per condition×voice, from our data)
-# ═════════════════════════════════════════════
 sec("TASK 5 — DESCRIPTIVE STATISTICS (per condition x voice)")
 
 desc = (
@@ -132,19 +117,13 @@ out()
 out(desc[["condition_voice","N","Mean_MemScore","SD_MemScore","Mean_HitRate","Mean_RT","SD_RT"]].to_string(index=False))
 desc.to_csv(os.path.join(OUTPUT_FOLDER,"descriptives_table.csv"), index=False)
 
-# Block-level descriptives from her data
 out()
-out("  Block-level corrected scores (from teammate data, raw Hits-FA counts):")
+out("  Block-level corrected scores (raw Hits-FA counts):")
 for b in [1,2,3]:
     bdf = tm[tm['block']==b]['corrected_memorability_score']
     out(f"    Block {b}: M={bdf.mean():.2f}, SD={bdf.std():.2f}, "
         f"Median={bdf.median():.1f}, N={len(bdf)}")
 
-# ═════════════════════════════════════════════
-# SECTION 3 — BLOCK PRACTICE EFFECT (new — from her data only)
-# Tests whether memorability score changes across blocks 1→2→3
-# A significant result means participants got better/worse over time
-# ═════════════════════════════════════════════
 sec("BLOCK PRACTICE EFFECT — Kruskal-Wallis across Blocks 1/2/3")
 
 b1 = tm[tm['block']==1]['corrected_memorability_score'].values
@@ -156,7 +135,6 @@ out(f"\n  H(2) = {kw_b:.3f}, p {fmt_p(p_b)}")
 out(f"  Block 1 M={np.mean(b1):.2f}  Block 2 M={np.mean(b2):.2f}  Block 3 M={np.mean(b3):.2f}")
 out(f"  Interpretation: {'Significant practice/order effect across blocks' if p_b < 0.05 else 'No significant block-order effect'}")
 
-# Post-hoc pairwise if significant
 if p_b < 0.05:
     out("\n  Pairwise Mann-Whitney post-hoc (Bonferroni a=0.05/3=0.0167):")
     pairs = [("1 vs 2", b1, b2), ("1 vs 3", b1, b3), ("2 vs 3", b2, b3)]
@@ -165,9 +143,7 @@ if p_b < 0.05:
         sig = "significant" if pu < 0.0167 else "not significant"
         out(f"    Block {label}: U={u:.1f}, p {fmt_p(pu)} [{sig}]")
 
-# ═════════════════════════════════════════════
 # SECTION 4 — TASK 6a: H1 — Active vs Passive Memorability
-# ═════════════════════════════════════════════
 sec("TASK 6a — H1: Active vs Passive Memorability (independent t-test)")
 
 voice_mem = mem.groupby(["participant_ID","voice"])["corrected_mem_score"].mean().reset_index()
@@ -186,9 +162,7 @@ results.append({"test":"H1 - Memorability Active vs Passive","hypothesis":"H1",
     "statistic":round(t6a,4),"df":len(act_m)+len(pas_m)-2,
     "p_value":round(p6a,4),"cohens_d":round(d6a,4)})
 
-# ═════════════════════════════════════════════
 # SECTION 5 — TASK 6b: H2 — Active vs Passive RT
-# ═════════════════════════════════════════════
 sec("TASK 6b — H2: Active vs Passive RT (independent t-test)")
 
 voice_rt = mem.groupby(["participant_ID","voice"])["mean_RT_IR"].mean().reset_index()
@@ -207,9 +181,7 @@ results.append({"test":"H2 - RT Active vs Passive","hypothesis":"H2",
     "statistic":round(t6b,4),"df":len(act_rt)+len(pas_rt)-2,
     "p_value":round(p6b,4),"cohens_d":round(d6b,4)})
 
-# ═════════════════════════════════════════════
 # SECTION 6 — TASK 7: H1b — HL-Active vs LH-Active (paired t-test)
-# ═════════════════════════════════════════════
 sec("TASK 7 — H1b: HL-Active vs LH-Active (paired t-test)")
 
 hl = mem[(mem["condition"]=="HL")&(mem["voice"]=="Active")][["participant_ID","corrected_mem_score"]].rename(columns={"corrected_mem_score":"HL"})
@@ -229,9 +201,7 @@ results.append({"test":"H1b - HL-Active vs LH-Active","hypothesis":"H1b",
     "statistic":round(t7,4),"df":len(paired7)-1,
     "p_value":round(p7,4),"cohens_d":round(d7,4)})
 
-# ═════════════════════════════════════════════
 # SECTION 7 — KRUSKAL-WALLIS: H1a — All 4 noun conditions
-# ═════════════════════════════════════════════
 sec("KRUSKAL-WALLIS — H1a: HH vs HL vs LH vs LL")
 
 cond_m = mem.groupby(["participant_ID","condition"])["corrected_mem_score"].mean().reset_index()
@@ -251,9 +221,7 @@ if p_c < 0.05:
             sig = "significant" if pu < 0.0083 else "not significant"
             out(f"    {conds[i]} vs {conds[j]}: U={u:.1f}, p {fmt_p(pu)} [{sig}]")
 
-# ═════════════════════════════════════════════
 # SECTION 8 — H3: WR accuracy Active vs Passive repeat
-# ═════════════════════════════════════════════
 sec("H3 — WR Accuracy: Active-repeat vs Passive-repeat (paired t-test)")
 
 wr = tri[tri["accuracy_WR"].notna()].copy()
@@ -275,9 +243,7 @@ results.append({"test":"H3 - WR accuracy Active vs Passive","hypothesis":"H3",
     "statistic":round(t3,4),"df":len(paired3)-1,
     "p_value":round(p3,4),"cohens_d":round(d3,4)})
 
-# ═════════════════════════════════════════════
 # SECTION 9 — BONFERRONI CORRECTION (t-tests only)
-# ═════════════════════════════════════════════
 sec("TASK 8 — BONFERRONI CORRECTION")
 
 res_df = pd.DataFrame(results)
@@ -295,16 +261,11 @@ for _, row in res_df.iterrows():
     label = "SIGNIFICANT" if row["significant_corrected"] else "not significant"
     out(f"  {row['test']:<45} {str(row['p_value']):<10} {label}")
 
-# Also note KW block result
 out()
 out(f"  [Non-parametric, no Bonferroni applied]")
 out(f"  KW blocks H1a    p {fmt_p(p_c)}  {'significant at p<.05' if p_c < 0.05 else 'not significant'}")
 out(f"  KW practice-eff  p {fmt_p(p_b)}  {'significant at p<.05 -- IMPORTANT NOTE' if p_b < 0.05 else 'not significant'}")
 
-# ─────────────────────────────────────────────
-# SAVE OUTPUTS
-# ─────────────────────────────────────────────
-# Add KW results to full table
 kw_rows = [
     {"test":"KW H1a - HH/HL/LH/LL","hypothesis":"H1a","M1":"see desc","M2":"see desc",
      "statistic":round(kw_c,4),"df":3,"p_value":round(p_c,4),"cohens_d":"N/A",
@@ -325,4 +286,5 @@ print("="*55)
 print(f"  -> {OUTPUT_FOLDER}/descriptives_table.csv")
 print(f"  -> {OUTPUT_FOLDER}/hypothesis_results.csv")
 print(f"  -> {OUTPUT_FOLDER}/results_report.txt")
+
 print("="*55)
