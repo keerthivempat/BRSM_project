@@ -6,6 +6,13 @@ A research data analysis pipeline for a psycholinguistic study examining how sen
 - **Noun frequency combinations**: HH, HL, LH, LL (H = High frequency, L = Low frequency)
 - **Practice effects**: Changes in memorability across experimental blocks
 
+## Participant Summary
+
+- **Total participants processed**: 114  
+- **Valid blocks retained**: 339 / 342 (99.1%)  
+- **Complete participants (all 3 blocks)**: 112  
+- **Exclusion rate**: 0.9%
+
 ## Project Structure
 
 ```
@@ -114,18 +121,6 @@ Raw participant log files from the experiment software, containing fields such a
 | `figure2_reaction_time.png`   | Mean IR reaction time by condition               |
 | `figure3_wr_proportion_yes.png` | WR proportion "Yes" by condition               |
 
-## Key Findings
-
-| Test | Statistic | p-value | Effect (Cohen's d) | Significant |
-|------|-----------|---------|---------------------|-------------|
-| H1: Active vs. Passive memory | t(222) = −0.671 | 0.503 | −0.090 | No |
-| H1a: Noun frequency differences | H(3) = 6.871 | 0.076 | — | No |
-| H1b: HL-Active vs. LH-Active | t(111) = −0.617 | 0.538 | −0.058 | No |
-| H2: Active vs. Passive RT | t(222) = −1.864 | 0.064 | −0.249 | No |
-| H3: WR accuracy Active vs. Passive | t(111) = 2.089 | 0.039 | 0.197 | Yes (unadjusted) |
-| Practice effect (Block 1→3) | H(2) = 64.855 | < .001 | — | Yes |
-
-**Notable observation:** A strong practice/learning effect was found across blocks (Block 1: M = −4.92 → Block 3: M = 4.70).
 
 ## Pipeline Diagram
 
@@ -151,9 +146,3 @@ clean_trials.csv + memorability_scores.csv + Figures (PNG)
 results_report.txt + hypothesis_results.csv + descriptives_table.csv
 ```
 
-## Participant Summary
-
-- **Total participants processed**: 114  
-- **Valid blocks retained**: 339 / 342 (99.1%)  
-- **Complete participants (all 3 blocks)**: 112  
-- **Exclusion rate**: 0.9%
