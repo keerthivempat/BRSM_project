@@ -1,0 +1,302 @@
+
+=================================================================
+LOADING DATA
+=================================================================
+  Condition-level rows      : 912
+  Participants (cond file)  : 114
+  Overall-level rows        : 114
+
+  Columns in condition file :
+    ['participant_ID', 'condition', 'encoding_voice', 'n_total', 'n_hits', 'hit_rate', 'fa_rate', 'corr_score', 'mean_rt', 'wr_yes', 'wr_no']
+  Columns in overall file   :
+    ['participant_ID', 'n_targets', 'n_hits', 'n_missed', 'hit_rate', 'n_filler', 'n_fa', 'fa_rate', 'corr_score', 'mean_rt', 'median_rt', 'sd_rt', 'min_rt', 'max_rt', 'n_valid_blocks']
+
+=================================================================
+GLM 1 — OLS GLM ON CORRECTED MEMORABILITY SCORE
+=================================================================
+
+  Step 1: Merging participant-level covariates...
+  Rows after merge: 912
+  Missing covariate values: {'fa_rate_overall': 0, 'median_rt_overall': 0}
+  Rows after dropping missing corr_score: 912
+  Standardised fa_rate_overall: M=0.1680, SD=0.1153
+  Standardised median_rt_overall: M=1604.9868, SD=299.4940
+
+  Final GLM 1 sample: 912 rows (912 with valid outcome)
+
+=================================================================
+GLM 1 — ASSUMPTION CHECK A: MULTICOLLINEARITY (VIF)
+=================================================================
+  Rule: VIF < 5 = acceptable, 5–10 = moderate concern, >10 = problematic
+
+          predictor      VIF
+              const 5.000000
+        voice_coded 1.000000
+            cond_HL 1.500000
+            cond_LH 1.500000
+            cond_LL 1.500000
+  fa_rate_overall_z 1.022254
+median_rt_overall_z 1.022254
+
+  Conclusion: Max VIF = 1.50 — No multicollinearity concern.
+  Proceed with standard OLS standard errors.
+
+=================================================================
+GLM 1 — MODEL FIT
+=================================================================
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:             corr_score   R-squared:                       0.156
+Model:                            OLS   Adj. R-squared:                  0.150
+Method:                 Least Squares   F-statistic:                     27.78
+Date:                Wed, 06 May 2026   Prob (F-statistic):           1.53e-30
+Time:                        20:34:13   Log-Likelihood:                 176.13
+No. Observations:                 912   AIC:                            -338.3
+Df Residuals:                     905   BIC:                            -304.6
+Df Model:                           6                                         
+Covariance Type:            nonrobust                                         
+=======================================================================================
+                          coef    std err          t      P>|t|      [0.025      0.975]
+---------------------------------------------------------------------------------------
+const                   0.6746      0.015     45.500      0.000       0.646       0.704
+voice_coded             0.0121      0.013      0.910      0.363      -0.014       0.038
+cond_HL                -0.0007      0.019     -0.039      0.969      -0.038       0.036
+cond_LH                -0.0124      0.019     -0.663      0.508      -0.049       0.024
+cond_LL                -0.0577      0.019     -3.079      0.002      -0.095      -0.021
+fa_rate_overall_z      -0.0830      0.007    -12.372      0.000      -0.096      -0.070
+median_rt_overall_z    -0.0103      0.007     -1.533      0.126      -0.023       0.003
+==============================================================================
+Omnibus:                      194.628   Durbin-Watson:                   1.150
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              354.153
+Skew:                          -1.283   Prob(JB):                     1.25e-77
+Kurtosis:                       4.655   Cond. No.                         5.39
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+=================================================================
+GLM 1 — ASSUMPTION CHECK B: NORMALITY OF RESIDUALS (Shapiro-Wilk)
+=================================================================
+  Shapiro-Wilk on residuals: W = 0.8858, p < .001
+  Conclusion: Residuals deviate from normality (p < .05).
+  However, with n > 100, the CLT provides robustness.
+  We additionally report HC3 robust standard errors below.
+
+=================================================================
+GLM 1 — ASSUMPTION CHECK C: HOMOSCEDASTICITY (Breusch-Pagan)
+=================================================================
+  Breusch-Pagan LM statistic : 13.0837
+  Breusch-Pagan p-value      : p = 0.0417
+  F-statistic                : 2.1954,  p = 0.0414
+  Conclusion: Heteroscedasticity detected (p < .05).
+  Re-fitting with HC3 heteroscedasticity-consistent standard errors.
+
+  HC3-corrected model summary:
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:             corr_score   R-squared:                       0.156
+Model:                            OLS   Adj. R-squared:                  0.150
+Method:                 Least Squares   F-statistic:                     40.34
+Date:                Wed, 06 May 2026   Prob (F-statistic):           1.24e-43
+Time:                        20:34:13   Log-Likelihood:                 176.13
+No. Observations:                 912   AIC:                            -338.3
+Df Residuals:                     905   BIC:                            -304.6
+Df Model:                           6                                         
+Covariance Type:                  HC3                                         
+=======================================================================================
+                          coef    std err          z      P>|z|      [0.025      0.975]
+---------------------------------------------------------------------------------------
+const                   0.6746      0.014     47.635      0.000       0.647       0.702
+voice_coded             0.0121      0.013      0.906      0.365      -0.014       0.038
+cond_HL                -0.0007      0.018     -0.041      0.968      -0.036       0.034
+cond_LH                -0.0124      0.018     -0.687      0.492      -0.048       0.023
+cond_LL                -0.0577      0.019     -3.013      0.003      -0.095      -0.020
+fa_rate_overall_z      -0.0830      0.006    -14.916      0.000      -0.094      -0.072
+median_rt_overall_z    -0.0103      0.006     -1.610      0.107      -0.023       0.002
+==============================================================================
+Omnibus:                      194.628   Durbin-Watson:                   1.150
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              354.153
+Skew:                          -1.283   Prob(JB):                     1.25e-77
+Kurtosis:                       4.655   Cond. No.                         5.39
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity robust (HC3)
+
+=================================================================
+GLM 1 — COEFFICIENTS SUMMARY
+=================================================================
+          predictor  coefficient  std_error  t_value  p_value  ci_lower  ci_upper
+              const       0.6746     0.0142  47.6349   0.0000    0.6469    0.7024
+        voice_coded       0.0121     0.0133   0.9064   0.3647   -0.0140    0.0381
+            cond_HL      -0.0007     0.0180  -0.0407   0.9675   -0.0359    0.0345
+            cond_LH      -0.0124     0.0181  -0.6866   0.4924   -0.0479    0.0230
+            cond_LL      -0.0577     0.0192  -3.0126   0.0026   -0.0953   -0.0202
+  fa_rate_overall_z      -0.0830     0.0056 -14.9162   0.0000   -0.0939   -0.0721
+median_rt_overall_z      -0.0103     0.0064  -1.6098   0.1074   -0.0228    0.0022
+
+  R² = 0.1555
+  Adjusted R² = 0.1499
+  F-statistic: F(6, 905) = 40.341, p < .001
+
+=================================================================
+GLM 1 — FIGURE: COEFFICIENT PLOT
+=================================================================
+  Figure saved: ./output\glm1_figure_coef_plot.png
+
+=================================================================
+GLM 2 — LOGISTIC GLM ON WR ACCURACY
+=================================================================
+
+  Step 1: Constructing WR dataset from wr_yes / wr_no counts...
+  Rows with at least one WR response: 906
+  Overall WR accuracy: M = 0.5260, SD = 0.2365
+  Final GLM 2 sample: 906 rows
+
+=================================================================
+GLM 2 — ASSUMPTION CHECK A: COMPLETE SEPARATION CHECK
+=================================================================
+encoding_voice condition  n_rows  mean_acc  has_correct  has_wrong
+        Active        HH     114  0.600439         True       True
+        Active        HL     113  0.601475         True       True
+        Active        LH     113  0.608407         True       True
+        Active        LL     112  0.592708         True       True
+       Passive        HH     114  0.433918         True       True
+       Passive        HL     113  0.437316         True       True
+       Passive        LH     113  0.460914         True       True
+       Passive        LL     114  0.473684         True       True
+
+  Conclusion: No complete separation. All cells have both correct and
+  incorrect WR responses. Standard logistic GLM is appropriate.
+
+=================================================================
+GLM 2 — ASSUMPTION CHECK B: MULTICOLLINEARITY (VIF)
+=================================================================
+  Rule: VIF < 5 = acceptable, 5–10 = moderate, >10 = problematic
+
+   predictor      VIF
+       const 6.048988
+ voice_coded 3.004552
+subject_high 2.004454
+ object_high 2.004454
+voice_x_subj 3.004483
+ voice_x_obj 3.004483
+
+  Conclusion: Max VIF = 3.00 — No multicollinearity concern.
+
+=================================================================
+GLM 2 — MODEL FIT (Logistic GLM with Clustered SEs)
+=================================================================
+                 Generalized Linear Model Regression Results                  
+==============================================================================
+Dep. Variable:           ['y1', 'y2']   No. Observations:                  906
+Model:                            GLM   Df Residuals:                      900
+Model Family:                Binomial   Df Model:                            5
+Link Function:                  Logit   Scale:                          1.0000
+Method:                          IRLS   Log-Likelihood:                -1303.4
+Date:                Wed, 06 May 2026   Deviance:                       958.18
+Time:                        20:34:13   Pearson chi2:                     810.
+No. Iterations:                     3   Pseudo R-squ. (CS):            0.08883
+Covariance Type:              cluster                                         
+================================================================================
+                   coef    std err          z      P>|z|      [0.025      0.975]
+--------------------------------------------------------------------------------
+const            0.3234      0.074      4.388      0.000       0.179       0.468
+voice_coded     -0.4237      0.110     -3.844      0.000      -0.640      -0.208
+subject_high     0.0276      0.068      0.404      0.686      -0.106       0.161
+object_high      0.0558      0.069      0.804      0.421      -0.080       0.192
+voice_x_subj    -0.1509      0.097     -1.558      0.119      -0.341       0.039
+voice_x_obj     -0.0772      0.101     -0.765      0.445      -0.275       0.121
+================================================================================
+
+  NOTE: Standard errors are clustered on participant_ID to account
+  for non-independence of multiple observations per participant.
+
+=================================================================
+GLM 2 — COEFFICIENTS AND ODDS RATIOS
+=================================================================
+   predictor  log_odds  odds_ratio  std_error  z_value  p_value  OR_ci_lower  OR_ci_upper
+       const    0.3234      1.3818     0.0737   4.3882   0.0000       1.1960       1.5966
+ voice_coded   -0.4237      0.6546     0.1102  -3.8436   0.0001       0.5274       0.8125
+subject_high    0.0276      1.0280     0.0682   0.4044   0.6859       0.8993       1.1750
+ object_high    0.0558      1.0574     0.0694   0.8042   0.4213       0.9229       1.2114
+voice_x_subj   -0.1509      0.8599     0.0969  -1.5580   0.1192       0.7112       1.0397
+ voice_x_obj   -0.0772      0.9257     0.1009  -0.7646   0.4445       0.7596       1.1282
+
+  Interpretation guide:
+    OR > 1 → predictor increases odds of correct WR
+    OR < 1 → predictor decreases odds of correct WR
+    OR = 1 → no effect on WR accuracy
+
+  Bonferroni correction: α = 0.05 / 5 = 0.0100
+
+  Significance summary (Bonferroni corrected):
+   predictor  odds_ratio  p_value  bonf_sig
+ voice_coded      0.6546   0.0001      True
+subject_high      1.0280   0.6859     False
+ object_high      1.0574   0.4213     False
+voice_x_subj      0.8599   0.1192     False
+ voice_x_obj      0.9257   0.4445     False
+
+=================================================================
+GLM 2 — FIGURE: ODDS RATIO PLOT
+=================================================================
+  Figure saved: ./output\glm2_figure_or_plot.png
+
+=================================================================
+GLM 2 — DESCRIPTIVE: WR ACCURACY BY CONDITION AND VOICE
+=================================================================
+condition encoding_voice  n_cells  mean_wr_acc  sd_wr_acc  total_correct  total_wr  overall_prop
+       HH         Active      114       0.6004     0.2381            342       572        0.5979
+       HH        Passive      114       0.4339     0.2008            258       585        0.4410
+       HL         Active      113       0.6015     0.2088            340       577        0.5893
+       HL        Passive      113       0.4373     0.2273            257       581        0.4423
+       LH         Active      113       0.6084     0.2135            338       567        0.5961
+       LH        Passive      113       0.4609     0.2468            267       571        0.4676
+       LL         Active      112       0.5927     0.2287            309       535        0.5776
+       LL        Passive      114       0.4737     0.2317            260       545        0.4771
+
+=================================================================
+GLM 2 — FIGURE: WR ACCURACY BY CONDITION AND VOICE
+=================================================================
+  Figure saved: ./output\glm2_figure_wr_by_condition.png
+
+=================================================================
+FINAL SUMMARY — ALL GLM RESULTS
+=================================================================
+
+  GLM 1 — OLS on Corrected Memorability Score
+    R² = 0.1555,  Adj. R² = 0.1499
+    F(6, 905) = 40.341,  p < .001
+    SE type: HC3 robust
+    Significant predictors (p<.05): ['cond_LL', 'fa_rate_overall_z']
+
+  GLM 2 — Logistic GLM on WR Accuracy (clustered SEs)
+    Significant predictors (p<.05): ['voice_coded']
+    Bonferroni-corrected α = 0.0100
+    Significant after Bonferroni : ['voice_coded']
+
+  Output files:
+    ./output/advanced_test1_interaction_plot.png
+    ./output/advanced_test2_rt_diagnostics.png
+    ./output/clean_trials.csv
+    ./output/descriptive_analysis_outputs
+    ./output/descriptives_table.csv
+    ./output/glm1_assumption_checks.txt
+    ./output/glm1_coefficients.csv
+    ./output/glm1_figure_coef_plot.png
+    ./output/glm1_ols_hc3_summary.txt
+    ./output/glm1_ols_summary.txt
+    ./output/glm1_vif.csv
+    ./output/glm2_assumption_checks.txt
+    ./output/glm2_coefficients.csv
+    ./output/glm2_figure_or_plot.png
+    ./output/glm2_figure_wr_by_condition.png
+    ./output/glm2_logistic_summary.txt
+    ./output/glm2_vif.csv
+    ./output/glm2_wr_descriptives.csv
+    ./output/glm_results_report.txt
+    ./output/hypothesis_results.csv
+    ./output/memorability_scores.csv
+    ./output/results_report.txt

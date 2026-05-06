@@ -1,0 +1,7 @@
+predictor,log_odds,odds_ratio,std_error,z_value,p_value,OR_ci_lower,OR_ci_upper,bonf_sig
+const,0.3234,1.3818,0.0737,4.3882,0.0,1.196,1.5966,True
+voice_coded,-0.4237,0.6546,0.1102,-3.8436,0.0001,0.5274,0.8125,True
+subject_high,0.0276,1.028,0.0682,0.4044,0.6859,0.8993,1.175,False
+object_high,0.0558,1.0574,0.0694,0.8042,0.4213,0.9229,1.2114,False
+voice_x_subj,-0.1509,0.8599,0.0969,-1.558,0.1192,0.7112,1.0397,False
+voice_x_obj,-0.0772,0.9257,0.1009,-0.7646,0.4445,0.7596,1.1282,False

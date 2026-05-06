@@ -1,0 +1,6 @@
+GLM 2 — ASSUMPTION CHECKS SUMMARY
+==================================================
+Complete separation       : None detected — OK
+VIF (max, excl. const)    : 3.00  OK
+Independence fix          : Clustered SEs on participant_ID applied
+Overdispersion            : Not applicable (binary logistic regression)

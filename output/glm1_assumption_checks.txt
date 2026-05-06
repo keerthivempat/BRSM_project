@@ -1,0 +1,6 @@
+GLM 1 — ASSUMPTION CHECKS SUMMARY
+==================================================
+VIF (max, excluding const) : 1.50  OK
+Shapiro-Wilk residuals     : W=0.8858, p < .001  VIOLATED (CLT protection applies)
+Breusch-Pagan              : LM=13.0837, p = 0.0417  VIOLATED -> HC3 SEs used
+SE type used in final model: HC3 robust

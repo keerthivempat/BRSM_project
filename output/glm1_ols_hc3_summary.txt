@@ -1,0 +1,30 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:             corr_score   R-squared:                       0.156
+Model:                            OLS   Adj. R-squared:                  0.150
+Method:                 Least Squares   F-statistic:                     40.34
+Date:                Wed, 06 May 2026   Prob (F-statistic):           1.24e-43
+Time:                        20:34:13   Log-Likelihood:                 176.13
+No. Observations:                 912   AIC:                            -338.3
+Df Residuals:                     905   BIC:                            -304.6
+Df Model:                           6                                         
+Covariance Type:                  HC3                                         
+=======================================================================================
+                          coef    std err          z      P>|z|      [0.025      0.975]
+---------------------------------------------------------------------------------------
+const                   0.6746      0.014     47.635      0.000       0.647       0.702
+voice_coded             0.0121      0.013      0.906      0.365      -0.014       0.038
+cond_HL                -0.0007      0.018     -0.041      0.968      -0.036       0.034
+cond_LH                -0.0124      0.018     -0.687      0.492      -0.048       0.023
+cond_LL                -0.0577      0.019     -3.013      0.003      -0.095      -0.020
+fa_rate_overall_z      -0.0830      0.006    -14.916      0.000      -0.094      -0.072
+median_rt_overall_z    -0.0103      0.006     -1.610      0.107      -0.023       0.002
+==============================================================================
+Omnibus:                      194.628   Durbin-Watson:                   1.150
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              354.153
+Skew:                          -1.283   Prob(JB):                     1.25e-77
+Kurtosis:                       4.655   Cond. No.                         5.39
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity robust (HC3)
