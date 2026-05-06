@@ -1,0 +1,26 @@
+======================================================================
+EXCLUSION LOG - Sentence Memorability Study
+======================================================================
+
+Total participants: 114
+Total possible blocks: 342
+Valid blocks: 339
+Excluded blocks: 3
+Exclusion rate: 0.9%
+
+======================================================================
+Detailed Exclusions:
+======================================================================
+
+Participant: 299, Block: 2
+Reason: Failed validation: Correct=3, Threshold=7.0
+  Correct: 3, Wrong: 0, Missed: 7, Threshold: 7.0
+
+Participant: 299, Block: 3
+Reason: Failed validation: Correct=3, Threshold=6.0
+  Correct: 3, Wrong: 0, Missed: 6, Threshold: 6.0
+
+Participant: 309, Block: 3
+Reason: Failed validation: Correct=5, Threshold=5.0
+  Correct: 5, Wrong: 0, Missed: 5, Threshold: 5.0
+
